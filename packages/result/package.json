@@ -1,0 +1,37 @@
+{
+    "name": "@monstermann/result",
+    "type": "module",
+    "version": "0.1.0",
+    "description": "Functional utilities for success | error types.",
+    "author": "Michael Ostermann <michaelostermann@me.com>",
+    "license": "MIT",
+    "homepage": "https://MichaelOstermann.github.io/result/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MichaelOstermann/result.git"
+    },
+    "bugs": {
+        "url": "https://github.com/MichaelOstermann/result/issues"
+    },
+    "keywords": [],
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "bundle": "tsdown",
+        "release": "bun publish --access public"
+    },
+    "dependencies": {
+        "@monstermann/dfdl": "^0.0.1"
+    }
+}
