@@ -6,7 +6,7 @@
 
 ## Features
 
-- **Lightweight:** Only ~500 bytes minified and gzipped.
+- **Lightweight:** Only ~800 bytes minified and gzipped.
 - **Library-agnostic:** Uses simple `{ ok: true, value }` / `{ ok: false, error }` objects.
 - **Composable and modular:** Pick and use only the functions you need, no need to adopt the whole library.
 - **Flexible API:** Functions support both "data-first" and "data-last" signatures for seamless use with `pipe` and functional programming styles.
