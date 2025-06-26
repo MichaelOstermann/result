@@ -13,8 +13,16 @@ export default defineConfig({
         socialLinks: [
             { icon: "github", link: "https://github.com/MichaelOstermann/result" },
         ],
+        docFooter: {
+            prev: false,
+            next: false,
+        },
     },
     markdown: {
+        theme: {
+            light: "github-light-default",
+            dark: "catppuccin-macchiato",
+        },
         config(md) {
             md.use(groupIconMdPlugin)
         },

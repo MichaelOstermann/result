@@ -1,12 +1,20 @@
 # result
 
-[![bundle][bundle-src]][bundle-href]
+<Badge type="info" class="size">
+    <span>Minified</span>
+    <span>1.67 KB</span>
+</Badge>
+
+<Badge type="info" class="size">
+    <span>Minzipped</span>
+    <span>516 B</span>
+</Badge>
 
 **Functional utilities for success | error types.**
 
 ## Features
 
-- **Lightweight:** Only ~800 bytes minified and gzipped.
+- **Lightweight:** Only ~500 bytes minified and gzipped.
 - **Library-agnostic:** Uses simple `{ ok: true, value }` / `{ ok: false, error }` objects.
 - **Composable and modular:** Pick and use only the functions you need, no need to adopt the whole library.
 - **Flexible API:** Functions support both "data-first" and "data-last" signatures for seamless use with `pipe` and functional programming styles.
@@ -270,7 +278,9 @@ if (result.ok) {
 
 ## API
 
-### `Ok<T>`
+### Ok
+
+`Ok<T>`
 
 Represents a synchronous success.
 
@@ -286,7 +296,9 @@ type Example = Ok<boolean>;
 // }
 ```
 
-### `Err<T>`
+### Err
+
+`Err<T>`
 
 Represents a synchronous error.
 
@@ -302,7 +314,9 @@ type Example = Err<boolean>;
 // }
 ```
 
-### `Result<T, E>`
+### Result
+
+`Result<T, E>`
 
 Represents a synchronous success or error.
 
@@ -313,7 +327,9 @@ type Example = Result<boolean, string>;
 // type Example = Ok<boolean> | Err<string>;
 ```
 
-### `OkP<T>`
+### OkP
+
+`OkP<T>`
 
 Represents an asynchronous success.
 
@@ -329,7 +345,9 @@ type Example = OkP<boolean>;
 // }>
 ```
 
-### `ErrP<T>`
+### ErrP
+
+`ErrP<T>`
 
 Represents an asynchronous error.
 
@@ -345,7 +363,9 @@ type Example = ErrP<boolean>;
 // }>
 ```
 
-### `ResultP<T, E>`
+### ResultP
+
+`ResultP<T, E>`
 
 Represents an asynchronous success or error.
 
@@ -356,7 +376,9 @@ type Example = ResultP<boolean, string>;
 // type Example = OkP<boolean> | ErrP<string>;
 ```
 
-### `OkLike<T>`
+### OkLike
+
+`OkLike<T>`
 
 Represents a success that is either synchronous or asynchronous.
 
@@ -367,7 +389,9 @@ type Example = OkLike<boolean, string>;
 // type Example = Ok<string> | OkP<string>;
 ```
 
-### `ErrLike<T>`
+### ErrLike
+
+`ErrLike<T>`
 
 Represents an error that is either synchronous or asynchronous.
 
@@ -378,7 +402,9 @@ type Example = ErrLike<boolean, string>;
 // type Example = Err<string> | ErrP<string>;
 ```
 
-### `ResultLike<T, E>`
+### ResultLike
+
+`ResultLike<T, E>`
 
 Represents a success or error that is either synchronous or asynchronous.
 
@@ -389,7 +415,9 @@ type Example = ResultLike<boolean, string>;
 // type Example = Result<boolean, string> | ResultP<boolean, string>;
 ```
 
-### `InferOk<T>`
+### InferOk
+
+`InferOk<T>`
 
 Extracts `Ok` values from any combination of results, including asynchronous ones:
 
@@ -400,7 +428,9 @@ import type { InferOk, Result, Ok } from "@monstermann/result";
 type Example = InferOk<Ok<boolean> | Result<string, string>>;
 ```
 
-### `InferErr<T>`
+### InferErr
+
+`InferErr<T>`
 
 Extracts `Err` values from any combination of results, including asynchronous ones:
 
@@ -411,7 +441,9 @@ import type { InferErr, Result, Err } from "@monstermann/result";
 type Example = InferErr<Err<boolean> | Result<string, string>>;
 ```
 
-### `SimplifyResult<T>`
+### SimplifyResult
+
+`SimplifyResult<T>`
 
 Takes any combination of `Result` types and simplifies its representation.
 
@@ -430,7 +462,9 @@ type C = SimplifyResult<
 >;
 ```
 
-### `ok(value)`
+### ok
+
+`ok(value)`
 
 - Casts `T` into `Ok<T>`
 - Casts `Promise<T>` into `OkP<T>`
@@ -445,7 +479,9 @@ ok(okP(true)); //=> OkP<boolean>
 ok(errP(true)); //=> ErrP<boolean>
 ```
 
-### `okP(value)`
+### okP
+
+`okP(value)`
 
 - Casts `T` into `OkP<T>`
 - Casts `Promise<T>` into `OkP<T>`
@@ -462,7 +498,9 @@ ok(okP(true)); //=> OkP<boolean>
 ok(errP(true)); //=> ErrP<boolean>
 ```
 
-### `err(value)`
+### err
+
+`err(value)`
 
 - Casts `T` into `Err<T>`
 - Casts `Promise<T>` into `ErrP<T>`
@@ -477,7 +515,9 @@ err(okP(true)); //=> OkP<boolean>
 err(errP(true)); //=> ErrP<boolean>
 ```
 
-### `errP(value)`
+### errP
+
+`errP(value)`
 
 - Casts `T` into `ErrP<T>`
 - Casts `Promise<T>` into `ErrP<T>`
@@ -492,7 +532,9 @@ errP(okP(true)); //=> OkP<boolean>
 errP(errP(true)); //=> ErrP<boolean>
 ```
 
-### `isOk(value)`
+### isOk
+
+`isOk(value)`
 
 A function that takes an `unknown` value and narrows it to `Ok<unknown>`.
 
@@ -512,7 +554,9 @@ pipe(true, isOk()); //=> false
 
 :::
 
-### `isErr(value)`
+### isErr
+
+`isErr(value)`
 
 A function that takes an `unknown` value and narrows it to `Err<unknown>`.
 
@@ -532,7 +576,9 @@ pipe(true, isErr()); //=> false
 
 :::
 
-### `isResult(value)`
+### isResult
+
+`isResult(value)`
 
 A function that takes an `unknown` value and narrows it to `Result<unknown, unknown>`.
 
@@ -552,7 +598,9 @@ pipe(true, isResult()); //=> false
 
 :::
 
-### `mapOk(result, fn)`
+### mapOk
+
+`mapOk(result, fn)`
 
 Transforms a `Result<T, E>` into a `Result<U, E>` by applying the given function to the `Ok` value.
 
@@ -579,7 +627,9 @@ pipe(
 
 :::
 
-### `mapErr(result, fn)`
+### mapErr
+
+`mapErr(result, fn)`
 
 Transforms a `Result<T, E>` into a `Result<T, U>` by applying the given function to the `Err` value.
 
@@ -606,7 +656,9 @@ pipe(
 
 :::
 
-### `andThen(result, fn)`
+### andThen
+
+`andThen(result, fn)`
 
 Transforms a `Result` into another one by applying the provided function to the `Ok` value and returning its result as-is.
 
@@ -657,7 +709,9 @@ pipe(
 
 :::
 
-### `orElse(result, fn)`
+### orElse
+
+`orElse(result, fn)`
 
 Transforms a `Result` into another one by applying the provided function to the `Err` value and returning its result as-is.
 
@@ -708,7 +762,9 @@ pipe(
 
 :::
 
-### `tapOk(result, fn)`
+### tapOk
+
+`tapOk(result, fn)`
 
 Allows you to peek into the `Ok` value of a `Result`, triggering a side-effect while ignoring the output.
 
@@ -728,7 +784,9 @@ pipe(okP(true), async (v) => console.log(v)); //=> ok(true)
 
 :::
 
-### `tapErr(result, fn)`
+### tapErr
+
+`tapErr(result, fn)`
 
 Allows you to peek into the `Err` value of a `Result`, triggering a side-effect while ignoring the output.
 
@@ -748,7 +806,9 @@ pipe(errP("message"), async (msg) => console.log(msg)); //=> err("message")
 
 :::
 
-### `okOr(result, fallback)`
+### okOr
+
+`okOr(result, fallback)`
 
 Extracts the `Ok` value from a `Result`, otherwise returns the fallback.
 
@@ -770,7 +830,9 @@ await pipe(errP(false), okOr(Promise.resolve(true))); // true
 
 :::
 
-### `okOrElse(result, fn)`
+### okOrElse
+
+`okOrElse(result, fn)`
 
 Extracts the `Ok` value from a `Result`, otherwise applies the `Err` value to the given function and returns its output.
 
@@ -807,7 +869,9 @@ await pipe(
 
 :::
 
-### `okOrThrow(result)`
+### okOrThrow
+
+`okOrThrow(result)`
 
 Extracts the `Ok` value from a `Result`, otherwise throws the `Err` value.
 
@@ -828,6 +892,3 @@ await pipe(errP("message"), okOrThrow()); // Throws "message"
 ```
 
 :::
-
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/%40monstermann/result?style=flat&colorA=080f12&colorB=3451b2&label=minzip
-[bundle-href]: https://bundlephobia.com/result?p=%40monstermann/result
