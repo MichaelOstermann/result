@@ -1,8 +1,8 @@
+import type { Err, Ok } from "../src/types"
 import { describe, expect, expectTypeOf, test } from "vitest"
-import { err } from "../src/err.js"
-import { isOk } from "../src/isOk.js"
-import { ok } from "../src/ok.js"
-import type { Ok, Err } from "../src/types.js"
+import { err } from "../src/err"
+import { isOk } from "../src/isOk"
+import { ok } from "../src/ok"
 
 describe("isOk", () => {
     describe("implementation", () => {

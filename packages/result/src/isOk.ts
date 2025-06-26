@@ -1,6 +1,6 @@
+import type { Ok } from "./types"
 import { dual } from "@monstermann/dfdl"
-import type { Ok } from "./types.js"
-import { isResult } from "./isResult.js"
+import { isResult } from "./isResult"
 
 /**
  * A function that takes an `unknown` value and narrows it to `Ok<unknown>`.

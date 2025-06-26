@@ -1,6 +1,6 @@
+import type { Err } from "./types"
 import { dual } from "@monstermann/dfdl"
-import type { Err } from "./types.js"
-import { isResult } from "./isResult.js"
+import { isResult } from "./isResult"
 
 /**
  * A function that takes an `unknown` value and narrows it to `Err<unknown>`.

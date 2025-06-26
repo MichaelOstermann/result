@@ -1,4 +1,4 @@
-import type { SimplifyResultAsync, SimplifyResultSync } from "./internals.js"
+import type { SimplifyResultAsync, SimplifyResultSync } from "./internals"
 
 /**
  * Represents a synchronous error.
@@ -16,9 +16,9 @@ import type { SimplifyResultAsync, SimplifyResultSync } from "./internals.js"
  * ```
  */
 export interface Err<T = unknown> {
+    readonly error: T
     readonly ok: false
     readonly value?: undefined
-    readonly error: T
 }
 
 /**
@@ -37,9 +37,9 @@ export interface Err<T = unknown> {
  * ```
  */
 export interface Ok<T = unknown> {
+    readonly error?: undefined
     readonly ok: true
     readonly value: T
-    readonly error?: undefined
 }
 
 /**

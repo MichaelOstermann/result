@@ -1,8 +1,8 @@
+import type { Err, ErrP, Ok, OkP, Result, ResultP } from "../src/types"
 import { describe, expect, expectTypeOf, test } from "vitest"
-import { err } from "../src/err.js"
-import { ok } from "../src/ok.js"
-import { orElse } from "../src/orElse.js"
-import type { Ok, Err, Result, OkP, ErrP, ResultP } from "../src/types.js"
+import { err } from "../src/err"
+import { ok } from "../src/ok"
+import { orElse } from "../src/orElse"
 
 describe("orElse", () => {
     describe("implementation", () => {

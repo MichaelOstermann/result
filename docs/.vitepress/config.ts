@@ -2,30 +2,30 @@ import { defineConfig } from "vitepress"
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons"
 
 export default defineConfig({
-    title: "Result",
-    description: "Functional utilities for success | error types.",
     base: "/result/",
+    description: "Functional utilities for success | error types.",
+    title: "Result",
+    markdown: {
+        theme: {
+            dark: "catppuccin-macchiato",
+            light: "github-light-default",
+        },
+        config(md) {
+            md.use(groupIconMdPlugin)
+        },
+    },
     themeConfig: {
         outline: "deep",
+        docFooter: {
+            next: false,
+            prev: false,
+        },
         search: {
             provider: "local",
         },
         socialLinks: [
             { icon: "github", link: "https://github.com/MichaelOstermann/result" },
         ],
-        docFooter: {
-            prev: false,
-            next: false,
-        },
-    },
-    markdown: {
-        theme: {
-            light: "github-light-default",
-            dark: "catppuccin-macchiato",
-        },
-        config(md) {
-            md.use(groupIconMdPlugin)
-        },
     },
     vite: {
         plugins: [

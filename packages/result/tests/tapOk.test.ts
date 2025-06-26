@@ -1,8 +1,8 @@
+import type { Err, ErrP, Ok, OkP, Result, ResultP } from "../src/types"
 import { describe, expect, expectTypeOf, test } from "vitest"
-import { err } from "../src/err.js"
-import { ok } from "../src/ok.js"
-import { tapOk } from "../src/tapOk.js"
-import type { Ok, Err, Result, OkP, ErrP, ResultP } from "../src/types.js"
+import { err } from "../src/err"
+import { ok } from "../src/ok"
+import { tapOk } from "../src/tapOk"
 
 describe("tapOk", () => {
     describe("implementation", () => {
@@ -23,13 +23,13 @@ describe("tapOk", () => {
         test("should not tap into Err<T>", () => {
             expect(tapOk(err(true), () => {
                 throw new Error("Tapped into Err")
-            })).toEqual({ ok: false, error: true })
+            })).toEqual({ error: true, ok: false })
         })
 
         test("should not tap into ErrP<T>", async () => {
             await expect(tapOk(Promise.resolve(err(true)), () => {
                 throw new Error("Tapped into Err")
-            })).resolves.toEqual({ ok: false, error: true })
+            })).resolves.toEqual({ error: true, ok: false })
         })
     })
 

@@ -1,6 +1,6 @@
-import { mapP } from "./internals.js"
-import { isResult } from "./isResult.js"
-import type { Ok, OkP, ResultLike, SimplifyResult } from "./types.js"
+import type { Ok, OkP, ResultLike, SimplifyResult } from "./types"
+import { mapP } from "./internals"
+import { isResult } from "./isResult"
 
 /**
  * - Casts `T` into `Ok<T>`

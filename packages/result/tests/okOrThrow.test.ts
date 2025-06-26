@@ -1,8 +1,8 @@
+import type { Result, ResultP } from "../src/types"
 import { describe, expect, expectTypeOf, test } from "vitest"
-import { err } from "../src/err.js"
-import { ok } from "../src/ok.js"
-import { okOrThrow } from "../src/okOrThrow.js"
-import type { Result, ResultP } from "../src/types.js"
+import { err } from "../src/err"
+import { ok } from "../src/ok"
+import { okOrThrow } from "../src/okOrThrow"
 
 describe("okOrThrow", () => {
     describe("implementation", () => {
@@ -32,6 +32,7 @@ describe("okOrThrow", () => {
             try {
                 expectTypeOf(okOrThrow(err(true))).toEqualTypeOf<never>()
             }
+            // eslint-disable-next-line unused-imports/no-unused-vars
             catch (_error) {}
         })
 
@@ -49,6 +50,7 @@ describe("okOrThrow", () => {
                 await expectTypeOf(p).toEqualTypeOf<Promise<never>>()
                 await p
             }
+            // eslint-disable-next-line unused-imports/no-unused-vars
             catch (_error) {}
         })
 

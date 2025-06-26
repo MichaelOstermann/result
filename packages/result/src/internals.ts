@@ -1,4 +1,4 @@
-import type { Err, ErrP, InferErr, InferOk, Ok, OkP, Result, ResultP } from "./types.js"
+import type { Err, ErrP, InferErr, InferOk, Ok, OkP, Result, ResultP } from "./types"
 
 export type SimplifyResultSync<T> = [InferOk<T>] extends [never]
     ? [InferErr<T>] extends [never]

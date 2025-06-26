@@ -1,6 +1,6 @@
+import type { InferOk, ResultLike, SimplifyResult } from "./types"
 import { dual } from "@monstermann/dfdl"
-import type { InferOk, ResultLike, SimplifyResult } from "./types.js"
-import { mapP } from "./internals.js"
+import { mapP } from "./internals"
 
 /**
  * Allows you to peek into the `Ok` value of a `Result`, triggering a side-effect while ignoring the output.

@@ -1,6 +1,6 @@
-import { isP } from "./internals.js"
-import { ok } from "./ok.js"
-import type { InferErr, InferOk, OkP, ResultLike, ResultP, SimplifyResult } from "./types.js"
+import type { InferErr, InferOk, OkP, ResultLike, ResultP, SimplifyResult } from "./types"
+import { isP } from "./internals"
+import { ok } from "./ok"
 
 /**
  * - Casts `T` into `OkP<T>`

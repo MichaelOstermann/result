@@ -1,7 +1,7 @@
+import type { SimplifyResultAsync, SimplifyResultSync } from "./internals"
+import type { InferErr, InferOk, Result, ResultP } from "./types"
 import { dual } from "@monstermann/dfdl"
-import type { SimplifyResultAsync, SimplifyResultSync } from "./internals.js"
-import { isP } from "./internals.js"
-import type { InferErr, InferOk, Result, ResultP } from "./types.js"
+import { isP } from "./internals"
 
 /**
  * Transforms a `Result<T, E>` into a `Result<T, U>` by applying the given function to the `Err` value.
@@ -31,6 +31,6 @@ export const mapErr: {
     <T extends ResultP, U>(result: T, map: (error: InferErr<T>) => U): SimplifyResultAsync<ResultP<InferOk<T>, Awaited<U>>>
 } = dual(2, (result: any, map: any): any => {
     return isP(result)
-        ? result.then(async (result: any) => result.ok ? result : { ok: false, error: await map(result.error) })
-        : result.ok ? result : { ok: false, error: map(result.error) }
+        ? result.then(async (result: any) => result.ok ? result : { error: await map(result.error), ok: false })
+        : result.ok ? result : { error: map(result.error), ok: false }
 })

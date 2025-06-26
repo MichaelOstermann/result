@@ -1,7 +1,7 @@
+import type { SimplifyResultAsync } from "./internals"
+import type { InferErr, InferOk, Result, ResultLike, ResultP, SimplifyResult } from "./types"
 import { dual } from "@monstermann/dfdl"
-import type { SimplifyResultAsync } from "./internals.js"
-import { mapP } from "./internals.js"
-import type { InferErr, InferOk, Result, ResultLike, ResultP, SimplifyResult } from "./types.js"
+import { mapP } from "./internals"
 
 /**
  * Transforms a `Result` into another one by applying the provided function to the `Err` value and returning its result as-is.

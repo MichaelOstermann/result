@@ -1,6 +1,6 @@
+import type { InferErr, InferOk, Result, ResultP } from "./types"
 import { dual } from "@monstermann/dfdl"
-import { mapP } from "./internals.js"
-import type { InferErr, InferOk, Result, ResultP } from "./types.js"
+import { mapP } from "./internals"
 
 /**
  * Extracts the `Ok` value from a `Result`, otherwise applies the `Err` value to the given function and returns its output.

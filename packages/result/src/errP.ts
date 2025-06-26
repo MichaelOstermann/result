@@ -1,6 +1,6 @@
-import { err } from "./err.js"
-import { isP } from "./internals.js"
-import type { ErrP, InferErr, InferOk, ResultLike, ResultP, SimplifyResult } from "./types.js"
+import type { ErrP, InferErr, InferOk, ResultLike, ResultP, SimplifyResult } from "./types"
+import { err } from "./err"
+import { isP } from "./internals"
 
 /**
  * - Casts `T` into `ErrP<T>`

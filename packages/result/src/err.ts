@@ -1,6 +1,6 @@
-import { mapP } from "./internals.js"
-import { isResult } from "./isResult.js"
-import type { Err, ErrP, ResultLike, SimplifyResult } from "./types.js"
+import type { Err, ErrP, ResultLike, SimplifyResult } from "./types"
+import { mapP } from "./internals"
+import { isResult } from "./isResult"
 
 /**
  * - Casts `T` into `Err<T>`
@@ -19,7 +19,7 @@ import type { Err, ErrP, ResultLike, SimplifyResult } from "./types.js"
 export function err(error: void): Err<void>
 export function err<T>(error: T): ErrOrForwardResult<T>
 export function err(error: unknown): unknown {
-    return mapP(error, (error: any) => isResult(error) ? error : { ok: false, error })
+    return mapP(error, (error: any) => isResult(error) ? error : { error, ok: false })
 }
 
 type ErrOrForwardResult<T> = SimplifyResult<T extends unknown

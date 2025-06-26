@@ -1,20 +1,20 @@
+import type { Err, ErrP, Ok, OkP, Result, ResultP } from "../src/types"
 import { describe, expect, expectTypeOf, test } from "vitest"
-import { err } from "../src/err.js"
-import { ok } from "../src/ok.js"
-import type { Err, ErrP, Ok, OkP, Result, ResultP } from "../src/types.js"
+import { err } from "../src/err"
+import { ok } from "../src/ok"
 
 describe("err", () => {
     describe("implementation", () => {
         test("err(boolean): Err<boolean>", () => {
-            expect(err(true)).toEqual({ ok: false, error: true })
+            expect(err(true)).toEqual({ error: true, ok: false })
         })
 
         test("err(Promise<boolean>): ErrP<boolean>", async () => {
-            await expect(err(Promise.resolve(true))).resolves.toEqual({ ok: false, error: true })
+            await expect(err(Promise.resolve(true))).resolves.toEqual({ error: true, ok: false })
         })
 
         test("err(Err<boolean>): Err<boolean>", () => {
-            expect(err(err(true))).toEqual({ ok: false, error: true })
+            expect(err(err(true))).toEqual({ error: true, ok: false })
         })
 
         test("err(Ok<boolean>): Ok<boolean>", () => {
@@ -22,7 +22,7 @@ describe("err", () => {
         })
 
         test("err(ErrP<boolean>): ErrP<boolean>", async () => {
-            await expect(err(Promise.resolve(err(true)))).resolves.toEqual({ ok: false, error: true })
+            await expect(err(Promise.resolve(err(true)))).resolves.toEqual({ error: true, ok: false })
         })
 
         test("err(OkP<boolean>): OkP<boolean>", async () => {

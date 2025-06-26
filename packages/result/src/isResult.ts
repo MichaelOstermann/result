@@ -1,5 +1,5 @@
+import type { Result } from "./types"
 import { dual } from "@monstermann/dfdl"
-import type { Result } from "./types.js"
 
 /**
  * A function that takes an `unknown` value and narrows it to `Result<unknown, unknown>`.
