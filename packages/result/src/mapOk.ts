@@ -1,6 +1,6 @@
 import type { SimplifyResultAsync, SimplifyResultSync } from "./internals"
 import type { InferErr, InferOk, Result, ResultP } from "./types"
-import { dual } from "@monstermann/dfdl"
+import { dfdlT } from "@monstermann/dfdl"
 import { isP } from "./internals"
 
 /**
@@ -29,7 +29,7 @@ export const mapOk: {
 
     <T extends Result, U>(result: T, map: (value: InferOk<T>) => U): SimplifyResultSync<Result<U, InferErr<T>>>
     <T extends ResultP, U>(result: T, map: (value: InferOk<T>) => U): SimplifyResultAsync<ResultP<Awaited<U>, InferErr<T>>>
-} = dual(2, (result: any, map: any): any => {
+} = dfdlT((result: any, map: any): any => {
     return isP(result)
         ? result.then(async (result: any) => !result.ok ? result : { ok: true, value: await map(result.value) })
         : !result.ok ? result : { ok: true, value: map(result.value) }

@@ -1,5 +1,5 @@
 import type { Result } from "./types"
-import { dual } from "@monstermann/dfdl"
+import { dfdlT } from "@monstermann/dfdl"
 
 /**
  * A function that takes an `unknown` value and narrows it to `Result<unknown, unknown>`.
@@ -17,7 +17,7 @@ import { dual } from "@monstermann/dfdl"
 export const isResult: {
     (): (value: unknown) => value is Result
     (value: unknown): value is Result
-} = dual(1, (value: unknown): value is Result => {
+} = dfdlT((value: unknown): value is Result => {
     return typeof value === "object"
         && value !== null
         && "ok" in value

@@ -1,5 +1,5 @@
 import type { InferOk, Result, ResultP } from "./types"
-import { dual } from "@monstermann/dfdl"
+import { dfdlT } from "@monstermann/dfdl"
 import { mapP } from "./internals"
 
 /**
@@ -23,7 +23,7 @@ export const okOrThrow: {
 
     <T extends Result>(result: T): InferOk<T>
     <T extends ResultP>(result: T): Promise<InferOk<T>>
-} = dual(1, (result: any): any => {
+} = dfdlT((result: any): any => {
     return mapP(result, (result: any) => {
         if (result.ok) return result.value
         throw result.error

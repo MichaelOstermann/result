@@ -1,6 +1,6 @@
 import type { SimplifyResultAsync } from "./internals"
 import type { InferErr, InferOk, Result, ResultLike, ResultP, SimplifyResult } from "./types"
-import { dual } from "@monstermann/dfdl"
+import { dfdlT } from "@monstermann/dfdl"
 import { mapP } from "./internals"
 
 /**
@@ -53,6 +53,6 @@ export const orElse: {
 
     <T extends Result, U extends Result>(result: T, orElse: (error: InferErr<T>) => U): SimplifyResult<Result<InferOk<T> | InferOk<U>, InferErr<U>>>
     <T extends ResultP, U extends ResultLike>(result: T, orElse: (error: InferErr<T>) => U): SimplifyResultAsync<ResultP<InferOk<T> | InferOk<U>, InferErr<U>>>
-} = dual(2, (result: any, orElse: any): any => {
+} = dfdlT((result: any, orElse: any): any => {
     return mapP(result, (result: any) => result.ok ? result : orElse(result.error))
 })

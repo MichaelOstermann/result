@@ -1,5 +1,5 @@
 import type { Ok } from "./types"
-import { dual } from "@monstermann/dfdl"
+import { dfdlT } from "@monstermann/dfdl"
 import { isResult } from "./isResult"
 
 /**
@@ -18,6 +18,6 @@ import { isResult } from "./isResult"
 export const isOk: {
     (): (value: unknown) => value is Ok<unknown>
     (value: unknown): value is Ok<unknown>
-} = dual(1, (value: unknown): value is Ok<unknown> => {
+} = dfdlT((value: unknown): value is Ok<unknown> => {
     return isResult(value) && value.ok
 })

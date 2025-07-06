@@ -32,6 +32,6 @@
         "release": "bun publish --access public"
     },
     "dependencies": {
-        "@monstermann/dfdl": "^0.0.1"
+        "@monstermann/dfdl": "^0.1.0"
     }
 }

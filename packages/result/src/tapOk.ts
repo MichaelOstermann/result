@@ -1,5 +1,5 @@
 import type { InferOk, ResultLike, SimplifyResult } from "./types"
-import { dual } from "@monstermann/dfdl"
+import { dfdlT } from "@monstermann/dfdl"
 import { mapP } from "./internals"
 
 /**
@@ -18,7 +18,7 @@ import { mapP } from "./internals"
 export const tapOk: {
     <T extends ResultLike>(tap: (value: InferOk<T>) => unknown): (result: T) => SimplifyResult<T>
     <T extends ResultLike>(result: T, tap: (value: InferOk<T>) => unknown): SimplifyResult<T>
-} = dual(2, (result: any, tap: any): any => {
+} = dfdlT((result: any, tap: any): any => {
     mapP(result, (result: any) => result.ok && tap(result.value))
     return result
 })
