@@ -1,5 +1,5 @@
 {
-  "lockfileVersion": 0,
+  "lockfileVersion": 1,
   "workspaces": {
     "": {
       "name": "@monstermann/result",
@@ -17,7 +17,7 @@
     },
     "packages/result": {
       "name": "@monstermann/result",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "dependencies": {
         "@monstermann/dfdl": "^0.1.0",
       },
