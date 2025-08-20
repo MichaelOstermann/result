@@ -1,0 +1,36 @@
+import type { InferErr, InferOk } from "../types"
+import type { Result } from "./types"
+import { dfdlT } from "@monstermann/dfdl"
+
+/**
+ * Uses a fallback result computed by `transform` if the current result is an Err. If the result is Ok, returns it unchanged. If the result is an Err, calls `transform` with the error value to produce an alternative result.
+ *
+ * @example
+ * ```ts
+ * // data-first
+ * Result.orElse(ok(5), (e) => ok(0));
+ * // Ok<number>(5)
+ *
+ * Result.orElse(err("fail"), (e) => ok(0));
+ * // Ok<number>(0)
+ *
+ * Result.orElse(err("fail"), (e) => err(`Handled: ${e}`));
+ * // Err<string>("Handled: fail")
+ * ```
+ *
+ * @example
+ * ```ts
+ * // data-last
+ * pipe(
+ *     err("fail"),
+ *     Result.orElse((e) => ok(0)),
+ * );
+ * // Ok<number>(0)
+ * ```
+ */
+export const orElse: {
+    <T extends Result, U extends Result>(transform: (error: InferErr<T>) => U): (result: T) => Result<InferOk<T> | InferOk<U>, InferErr<U>>
+    <T extends Result, U extends Result>(result: T, transform: (error: InferErr<T>) => U): Result<InferOk<T> | InferOk<U>, InferErr<U>>
+} = dfdlT((result: Result, transform: any): any => {
+    return result.ok ? result : transform(result.error)
+}, 2)

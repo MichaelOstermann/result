@@ -1,23 +1,19 @@
-import type { Err } from "./types"
-import { dfdlT } from "@monstermann/dfdl"
+import type { Err } from "./Result/types"
+import { dfdl } from "@monstermann/dfdl"
 import { isResult } from "./isResult"
 
 /**
- * A function that takes an `unknown` value and narrows it to `Err<unknown>`.
+ * Returns `true` if the `result` is an Err, `false` otherwise.
  *
+ * @example
  * ```ts
- * isErr(ok(true)); //=> false
- * isErr(err(false)); //=> true
- * isErr(true); //=> false
+ * isErr(err("fail"));
+ * // true
  *
- * pipe(ok(true), isErr()); //=> false
- * pipe(err(false), isErr()); //=> true
- * pipe(true, isErr()); //=> false
+ * isErr(ok(42));
+ * // false
  * ```
  */
-export const isErr: {
-    (): (value: unknown) => value is Err<unknown>
-    (value: unknown): value is Err<unknown>
-} = dfdlT((value: unknown): value is Err<unknown> => {
+export const isErr = dfdl((value: unknown): value is Err => {
     return isResult(value) && !value.ok
-})
+}, 1)

@@ -1,23 +1,19 @@
-import type { Ok } from "./types"
-import { dfdlT } from "@monstermann/dfdl"
+import type { Ok } from "./Result/types"
+import { dfdl } from "@monstermann/dfdl"
 import { isResult } from "./isResult"
 
 /**
- * A function that takes an `unknown` value and narrows it to `Ok<unknown>`.
+ * Returns `true` if the `result` is an Ok, `false` otherwise.
  *
+ * @example
  * ```ts
- * isOk(ok(true)); //=> true
- * isOk(err(false)); //=> false
- * isOk(true); //=> false
+ * isOk(ok(42));
+ * // true
  *
- * pipe(ok(true), isOk()); //=> true
- * pipe(err(false), isOk()); //=> false
- * pipe(true, isOk()); //=> false
+ * isOk(err("fail"));
+ * // false
  * ```
  */
-export const isOk: {
-    (): (value: unknown) => value is Ok<unknown>
-    (value: unknown): value is Ok<unknown>
-} = dfdlT((value: unknown): value is Ok<unknown> => {
+export const isOk = dfdl((value: unknown): value is Ok => {
     return isResult(value) && value.ok
-})
+}, 1)

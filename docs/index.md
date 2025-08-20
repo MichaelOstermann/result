@@ -6,73 +6,87 @@ aside: true
 
 <Badge type="info" class="size">
     <span>Minified</span>
-    <span>1.67 KB</span>
+    <span>5.00 KB</span>
 </Badge>
 
 <Badge type="info" class="size">
     <span>Minzipped</span>
-    <span>516 B</span>
+    <span>1.00 KB</span>
 </Badge>
 
 **Functional utilities for success | error types.**
 
-## Features
+## Overview
 
-- **Lightweight:** Only ~500 bytes minified and gzipped.
-- **Library-agnostic:** Uses simple `{ ok: true, value }` / `{ ok: false, error }` objects.
-- **Composable and modular:** Pick and use only the functions you need, no need to adopt the whole library.
-- **Flexible API:** Functions support both "data-first" and "data-last" signatures for seamless use with `pipe` and functional programming styles.
-- **Async-friendly:** Functions work interchangeably with both synchronous and asynchronous results.
-- **Well-tested:** 200+ unit tests ensure reliability and correctness.
+The types `Ok<T>` and `Err<T>` are expressed as plain objects, no wrapper classes are involved - you can act upon the raw objects however you wish and build your own functions around them:
 
-## Examples
+```ts
+import type { Result, Ok, Err } from "@monstermann/result";
+import { ok, err } from "@monstermann/result";
 
-**Sync**
+const a = ok(true);
+const b: Ok<boolean> = { ok: true, value: true };
+
+const c = err(false);
+const d: Err<boolean> = { ok: false, error: false };
+
+const e: Result<boolean, string> = { ok: true, value: true };
+// Narrowed to Ok<boolean>
+if (e.ok) console.log(e.value);
+// Narrowed to Err<string>
+if (!e.ok) console.log(e.error);
+```
+
+### Async
+
+Asynchronous results are simply expressed as `Promise<Ok<T>>` and `Promise<Err<T>>` and typically require no special constructors (eg. `async (v) => ok(v)` is enough).
+
+```ts
+import { ResultAsync, ok } from "@monstermann/result";
+
+const a = ok(5); // Ok<number>(5)
+const b = ResultAsync.map(a, (x) => x * 2); // OkAsync<number>(10)
+const c = ResultAsync.map(b, (x) => x * 2); // OkAsync<number>(20)
+```
+
+### Pipe
+
+Most functions come with "data-first" and "data-last" signatures, meaning they are [`pipe`](https://michaelostermann.github.io/dfdl/#pipe) friendly:
 
 ::: code-group
 
+<!-- prettier-ignore -->
 ```ts [data-first]
-import { ok, mapOk, okOrThrow } from "@monstermann/result";
+import { Result, ok } from "@monstermann/result"
 
-const a = ok(0); //=> { ok: true, value: 0 }
-const b = mapOk(input, (num) => num + 1); //=> { ok: true, value: 1 }
-const c = okOrThrow(b); //=> 1
+Result.map(
+    ok(5),
+    (x) => x * 2
+);
+// Ok<number>
+
+Result.map(
+    err("fail"),
+    (x) => x * 2
+);
+// Err<string>
 ```
 
+<!-- prettier-ignore -->
 ```ts [data-last]
-import { ok, mapOk, okOrThrow } from "@monstermann/result"
-import { pipe } from "remeda"
+import { Result, ok } from "@monstermann/result"
 
 pipe(
-    ok(0),
-    mapOk((num) => num + 1)),
-    okOrThrow()
-)
-```
+    ok(5),
+    Result.map((x) => x * 2),
+);
+// Ok<number>
 
-:::
-
-**Async**
-
-::: code-group
-
-```ts [data-first]
-import { okP, mapOk, okOrThrow } from "@monstermann/result";
-
-const a = okP(0); //=> Promise<{ ok: true, value: 0 }>
-const b = mapOk(input, async (num) => num + 1); //=> Promise<{ ok: true, value: 1 }>
-const c = await okOrThrow(b); //=> 1
-```
-
-```ts [data-last]
-import { okP, mapOk, okOrThrow } from "@monstermann/result";
-import { pipe } from "remeda"
-
-await pipe(
-    okP(0),
-    mapOk(async (num) => num + 1)),
-    okOrThrow()
-)
+pipe(
+    err("fail"),
+    Result.map((x) => x * 2),
+);
+// Err<string>
 ```
 
 :::
@@ -99,174 +113,117 @@ bun add @monstermann/result
 
 :::
 
-## Overview
+## Tree-shaking
 
-### Types
-
-The core types of this library are:
+### Installation
 
 ::: code-group
 
-```ts [sync]
-interface Ok<T> {
-    readonly ok: true;
-    readonly value: T;
-    readonly error?: undefined;
-}
-
-interface Err<T> {
-    readonly ok: false;
-    readonly value?: undefined;
-    readonly error: T;
-}
-
-type Result<T, E> = Ok<T> | Err<E>;
+```sh [npm]
+npm install -D @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
 ```
 
-```ts [async]
-// Async signatures are suffixed with `P`, standing for `Promise`.
-
-type OkP<T> = Promise<Ok<T>>;
-
-type ErrP<T> = Promise<Err<T>>;
-
-type ResultP<T, E> = Promise<Result<T, E>>;
+```sh [pnpm]
+pnpm -D add @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
 ```
 
-```ts [mixed]
-type OkLike<T> = Ok<T> | OkP<T>;
-
-type ErrLike<T> = Err<T> | ErrP<T>;
-
-type ResultLike<T, E> = Result<T, E> | ResultP<T, E>;
+```sh [yarn]
+yarn -D add @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
 ```
 
-:::
-
-### Values
-
-Since this library acts upon regular objects and promises, you can construct values for any `Result` type on your own however you wish, some examples:
-
-::: code-group
-
-```ts [sync]
-import type { Result } from "@monstermann/result";
-import { ok, err } from "@monstermann/result";
-
-// Creating your own records: // [!code highlight]
-
-const example: Result<boolean, string> = condition
-    ? { ok: true, value: true }
-    : { ok: false, value: "message" };
-
-// Using `ok` and `err`: // [!code highlight]
-
-const example2: Result<boolean, string> = condition ? ok(true) : err("message");
-
-example.value; // boolean | undefined
-example.error; // string | undefined
-
-if (example.ok) {
-    example.value; // boolean
-} else {
-    example.error; // string
-}
-```
-
-```ts [async]
-import type { ResultP } from "@monstermann/result";
-import { ok, err, okP, errP } from "@monstermann/result";
-
-// Using `new Promise`: // [!code highlight]
-
-const example: ResultP<boolean, string> = new Promise(function (resolve) {
-    if (condition) resolve({ ok: true, value: true });
-    else resolve({ ok: false, error: "message" });
-});
-
-// Using `new Promise` + `ok` and `err`: // [!code highlight]
-
-const example2: ResultP<boolean, string> = new Promise(function (resolve) {
-    if (condition) resolve(ok(true));
-    else resolve(err("message"));
-});
-
-// Using `Promise.resolve`: // [!code highlight]
-
-const example3: ResultP<boolean, string> = condition
-    ? Promise.resolve({ ok: true, value: true })
-    : Promise.resolve({ ok: false, error: "message" });
-
-// Using `Promise.resolve` + `ok` and `err`: // [!code highlight]
-
-const example4: ResultP<boolean, string> = condition
-    ? Promise.resolve(ok(value))
-    : Promise.resolve(err(value));
-
-// Using `okP` and `errP`: // [!code highlight]
-
-const example4: ResultP<boolean, string> = condition
-    ? okP(true)
-    : errP("message");
+```sh [bun]
+bun -D add @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
 ```
 
 :::
 
 ### Usage
 
-Similarly, these plain records and promises are often more than enough for simple scenarios. The utilities this library provides are entirely optional for you to use, and you can easily create your own:
-
 ::: code-group
 
-```ts [sync]
-import type { Result } from "@monstermann/result";
-import { ok, err } from "@monstermann/result";
+```ts [Vite]
+// vite.config.ts
+import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/vite";
+import treeshakeResult from "@monstermann/tree-shake-result";
 
-const result: Result<boolean, string> = condition ? ok(true) : err("message");
-
-result.value; // boolean | undefined
-result.error; // string | undefined
-
-if (result.ok) {
-    result.value; // boolean
-} else {
-    result.error; // string
-}
+export default defineConfig({
+    plugins: [
+        treeshake({
+            resolve: [treeshakeResult],
+        }),
+    ],
+});
 ```
 
-```ts [async]
-import type { ResultP } from "@monstermann/result";
-import { okP, errP } from "@monstermann/result";
+```ts [Rollup]
+// rollup.config.js
+import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/rollup";
+import treeshakeResult from "@monstermann/tree-shake-result";
 
-const resultP: ResultP<boolean, string> = condition
-    ? okP(true)
-    : errP("message");
+export default {
+    plugins: [
+        treeshake({
+            resolve: [treeshakeResult],
+        }),
+    ],
+};
+```
 
-// Using `Promise.then`: // [!code highlight]
+```ts [Rolldown]
+// rolldown.config.js
+import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/rolldown";
+import treeshakeResult from "@monstermann/tree-shake-result";
 
-resultP.then(function (result) {
-    result.value; // boolean | undefined
-    result.error; // string | undefined
+export default {
+    plugins: [
+        treeshake({
+            resolve: [treeshakeResult],
+        }),
+    ],
+};
+```
 
-    if (result.ok) {
-        result.value; // boolean
-    } else {
-        result.error; // string
-    }
+```ts [Webpack]
+// webpack.config.js
+const treeshake = require("@monstermann/unplugin-tree-shake-import-namespaces/webpack");
+const treeshakeResult = require("@monstermann/tree-shake-result");
+
+module.exports = {
+    plugins: [
+        treeshake({
+            resolve: [treeshakeResult],
+        }),
+    ],
+};
+```
+
+```ts [Rspack]
+// rspack.config.js
+const treeshake = require("@monstermann/unplugin-tree-shake-import-namespaces/rspack");
+const treeshakeResult = require("@monstermann/tree-shake-result");
+
+module.exports = {
+    plugins: [
+        treeshake({
+            resolve: [treeshakeResult],
+        }),
+    ],
+};
+```
+
+```ts [ESBuild]
+// esbuild.config.js
+import { build } from "esbuild";
+import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/esbuild";
+import treeshakeResult from "@monstermann/tree-shake-result";
+
+build({
+    plugins: [
+        treeshake({
+            resolve: [treeshakeResult],
+        }),
+    ],
 });
-
-// Using `await`: // [!code highlight]
-
-await resultP.value; // boolean | undefined
-await resultP.error; // string | undefined
-
-const result = await resultP;
-
-if (result.ok) {
-    result.value; // boolean
-} else {
-    result.error; // string
-}
 ```
 
 :::

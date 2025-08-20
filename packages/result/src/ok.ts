@@ -1,31 +1,31 @@
-import type { Ok, OkP, ResultLike, SimplifyResult } from "./types"
-import { mapP } from "./internals"
+import type { Err, Ok } from "./Result/types"
 import { isResult } from "./isResult"
 
 /**
- * - Casts `T` into `Ok<T>`
- * - Casts `Promise<T>` into `OkP<T>`
- * - Forwards any `Result` type as-is
+ * Creates an Ok result containing the given `value`. If the `value` is already a Result, it returns it unchanged.
  *
+ * @example
  * ```ts
- * ok(true); //=> Ok<boolean>
- * ok(Promise.resolve(true)); //=> OkP<boolean>
- * ok(ok(true)); //=> Ok<boolean>
- * ok(err(true)); //=> Err<boolean>
- * ok(okP(true)); //=> OkP<boolean>
- * ok(errP(true)); //=> ErrP<boolean>
+ * ok();
+ * // Ok<void>
+ *
+ * ok(42);
+ * // Ok<number>
+ *
+ * ok("hello");
+ * // Ok<string>
+ *
+ * ok(ok(true));
+ * // Ok<boolean>
+ *
+ * ok(err("fail"));
+ * // Err<string>
  * ```
  */
 export function ok(value: void): Ok<void>
-export function ok<T>(value: T): OkOrForwardResult<T>
+export function ok<T>(value: Ok<T>): Ok<T>
+export function ok<T>(value: Err<T>): Err<T>
+export function ok<T>(value: T): Ok<T>
 export function ok(value: unknown): unknown {
-    return mapP(value, (value: any) => isResult(value) ? value : { ok: true, value })
+    return isResult(value) ? value : { ok: true, value }
 }
-
-type OkOrForwardResult<T> = SimplifyResult<T extends unknown
-    ? T extends ResultLike
-        ? T
-        : T extends Promise<infer U>
-            ? OkP<U>
-            : Ok<T>
-    : never>

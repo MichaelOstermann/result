@@ -1,26 +1,28 @@
-import type { Result } from "./types"
-import { dfdlT } from "@monstermann/dfdl"
+import type { Result } from "./Result/types"
+import { dfdl } from "@monstermann/dfdl"
 
 /**
- * A function that takes an `unknown` value and narrows it to `Result<unknown, unknown>`.
+ * Returns `true` if the `value` is a Result (either Ok or Err), `false` otherwise.
  *
+ * @example
  * ```ts
- * isResult(ok(true)); //=> true
- * isResult(err(false)); //=> true
- * isResult(true); //=> false
+ * isResult(ok(42));
+ * // true
  *
- * pipe(ok(true), isResult()); //=> true
- * pipe(err(false), isResult()); //=> true
- * pipe(true, isResult()); //=> false
+ * isResult(err("fail"));
+ * // true
+ *
+ * isResult(42);
+ * // false
+ *
+ * isResult("hello");
+ * // false
  * ```
  */
-export const isResult: {
-    (): (value: unknown) => value is Result
-    (value: unknown): value is Result
-} = dfdlT((value: unknown): value is Result => {
+export const isResult = dfdl((value: unknown): value is Result => {
     return typeof value === "object"
         && value !== null
         && "ok" in value
         && typeof value.ok === "boolean"
         && ("value" in value || "error" in value)
-})
+}, 1)

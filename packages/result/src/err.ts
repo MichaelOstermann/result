@@ -1,31 +1,31 @@
-import type { Err, ErrP, ResultLike, SimplifyResult } from "./types"
-import { mapP } from "./internals"
+import type { Err, Ok } from "./Result/types"
 import { isResult } from "./isResult"
 
 /**
- * - Casts `T` into `Err<T>`
- * - Casts `Promise<T>` into `ErrP<T>`
- * - Forwards any `Result` type as-is
+ * Creates an Err result containing the given `error`. If the `error` is already a Result, it returns it unchanged.
  *
+ * @example
  * ```ts
- * err(true); //=> Err<boolean>
- * err(Promise.resolve(true)); //=> ErrP<boolean>
- * err(ok(true)); //=> Ok<boolean>
- * err(err(true)); //=> Err<boolean>
- * err(okP(true)); //=> OkP<boolean>
- * err(errP(true)); //=> ErrP<boolean>
+ * err();
+ * // Err<void>
+ *
+ * err("failed");
+ * // Err<string>
+ *
+ * err(404);
+ * // Err<number>
+ *
+ * err(ok(true));
+ * // Ok<boolean>
+ *
+ * err(err("fail"));
+ * // Err<string>
  * ```
  */
 export function err(error: void): Err<void>
-export function err<T>(error: T): ErrOrForwardResult<T>
+export function err<T>(error: Ok<T>): Ok<T>
+export function err<T>(error: Err<T>): Err<T>
+export function err<T>(error: T): Err<T>
 export function err(error: unknown): unknown {
-    return mapP(error, (error: any) => isResult(error) ? error : { error, ok: false })
+    return isResult(error) ? error : { error, ok: false }
 }
-
-type ErrOrForwardResult<T> = SimplifyResult<T extends unknown
-    ? T extends ResultLike
-        ? T
-        : T extends Promise<infer U>
-            ? ErrP<U>
-            : Err<T>
-    : never>
