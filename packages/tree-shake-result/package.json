@@ -1,7 +1,7 @@
 {
     "name": "@monstermann/tree-shake-result",
     "type": "module",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "description": "Functional utilities for success | error types.",
     "author": "Michael Ostermann <michaelostermann@me.com>",
     "license": "MIT",
