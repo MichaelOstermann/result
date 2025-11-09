@@ -20,14 +20,14 @@
     },
     "packages/result": {
       "name": "@monstermann/result",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "dependencies": {
         "@monstermann/dfdl": "^0.1.0",
       },
     },
     "packages/tree-shake-result": {
       "name": "@monstermann/tree-shake-result",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "dependencies": {
         "@monstermann/tree-shake-import-namespaces": "^0.1.0",
       },
