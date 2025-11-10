@@ -120,19 +120,19 @@ bun add @monstermann/result
 ::: code-group
 
 ```sh [npm]
-npm install -D @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
+npm install -D @monstermann/unplugin-result
 ```
 
 ```sh [pnpm]
-pnpm -D add @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
+pnpm -D add @monstermann/unplugin-result
 ```
 
 ```sh [yarn]
-yarn -D add @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
+yarn -D add @monstermann/unplugin-result
 ```
 
 ```sh [bun]
-bun -D add @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-import-namespaces
+bun -D add @monstermann/unplugin-result
 ```
 
 :::
@@ -143,86 +143,56 @@ bun -D add @monstermann/tree-shake-result @monstermann/unplugin-tree-shake-impor
 
 ```ts [Vite]
 // vite.config.ts
-import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/vite";
-import treeshakeResult from "@monstermann/tree-shake-result";
+import result from "@monstermann/unplugin-result/vite";
 
 export default defineConfig({
-    plugins: [
-        treeshake({
-            resolve: [treeshakeResult],
-        }),
-    ],
+    plugins: [result()],
 });
 ```
 
 ```ts [Rollup]
 // rollup.config.js
-import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/rollup";
-import treeshakeResult from "@monstermann/tree-shake-result";
+import result from "@monstermann/unplugin-result/rollup";
 
 export default {
-    plugins: [
-        treeshake({
-            resolve: [treeshakeResult],
-        }),
-    ],
+    plugins: [result()],
 };
 ```
 
 ```ts [Rolldown]
 // rolldown.config.js
-import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/rolldown";
-import treeshakeResult from "@monstermann/tree-shake-result";
+import result from "@monstermann/unplugin-result/rolldown";
 
 export default {
-    plugins: [
-        treeshake({
-            resolve: [treeshakeResult],
-        }),
-    ],
+    plugins: [result()],
 };
 ```
 
 ```ts [Webpack]
 // webpack.config.js
-const treeshake = require("@monstermann/unplugin-tree-shake-import-namespaces/webpack");
-const treeshakeResult = require("@monstermann/tree-shake-result");
+const result = require("@monstermann/unplugin-result/webpack");
 
 module.exports = {
-    plugins: [
-        treeshake({
-            resolve: [treeshakeResult],
-        }),
-    ],
+    plugins: [result()],
 };
 ```
 
 ```ts [Rspack]
 // rspack.config.js
-const treeshake = require("@monstermann/unplugin-tree-shake-import-namespaces/rspack");
-const treeshakeResult = require("@monstermann/tree-shake-result");
+const result = require("@monstermann/unplugin-result/rspack");
 
 module.exports = {
-    plugins: [
-        treeshake({
-            resolve: [treeshakeResult],
-        }),
-    ],
+    plugins: [result()],
 };
 ```
 
 ```ts [ESBuild]
 // esbuild.config.js
 import { build } from "esbuild";
-import treeshake from "@monstermann/unplugin-tree-shake-import-namespaces/esbuild";
-import treeshakeResult from "@monstermann/tree-shake-result";
+import result from "@monstermann/unplugin-result/esbuild";
 
 build({
-    plugins: [
-        treeshake({
-            resolve: [treeshakeResult],
-        }),
-    ],
+    plugins: [result()],
 });
 ```
 

@@ -1,0 +1,37 @@
+import type { Options } from "./types"
+import transform from "@monstermann/tree-shake-import-namespaces"
+import { createUnplugin } from "unplugin"
+import { createFilter } from "unplugin-utils"
+
+export default createUnplugin<Options>(({ debug, enforce, exclude, include }) => {
+    const shouldDebug = debug === undefined
+        ? () => false
+        : typeof debug === "boolean"
+            ? () => debug
+            : createFilter(debug)
+
+    return {
+        enforce,
+        name: "unplugin-result",
+        transform: {
+            filter: {
+                id: {
+                    exclude,
+                    include: include || [/\.[jt]sx?$/],
+                },
+            },
+            handler(code, id) {
+                return transform(code, id, {
+                    debug: shouldDebug(id),
+                    resolve({ importAlias, importName, importPath, propertyName }) {
+                        if (importPath === "@monstermann/result" && importName === "Result")
+                            return `import { ${propertyName} as ${importAlias} } from "@monstermann/result/Result/${propertyName}.js"`
+                        if (importPath === "@monstermann/result" && importName === "ResultAsync")
+                            return `import { ${propertyName} as ${importAlias} } from "@monstermann/result/ResultAsync/${propertyName}.js"`
+                        return undefined
+                    },
+                })
+            },
+        },
+    }
+})
