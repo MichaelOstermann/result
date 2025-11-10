@@ -1,7 +1,7 @@
 {
     "name": "@monstermann/result",
     "type": "module",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "description": "Functional utilities for success | error types.",
     "author": "Michael Ostermann <michaelostermann@me.com>",
     "license": "MIT",
