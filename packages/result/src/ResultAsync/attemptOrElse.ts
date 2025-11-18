@@ -1,4 +1,4 @@
-import type { ResultAsync } from "./types"
+import type { ResultAsync } from "."
 import { err } from "../err"
 import { ok } from "../ok"
 

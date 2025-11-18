@@ -1,5 +1,5 @@
+import type { Result } from "."
 import type { InferErr, InferOk } from "../types"
-import type { Result } from "./types"
 
 /**
  * Combines multiple `results` into a single result. If all results are Ok, returns an Ok containing an array of all values. If any result is an Err, returns the first Err encountered.

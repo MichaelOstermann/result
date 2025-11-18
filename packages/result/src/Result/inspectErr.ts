@@ -1,5 +1,5 @@
+import type { Result } from "."
 import type { InferErr } from "../types"
-import type { Result } from "./types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**

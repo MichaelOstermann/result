@@ -1,5 +1,5 @@
+import type { ResultAsync } from "."
 import type { AwaitableResult, InferErr, InferOk } from "../types"
-import type { ResultAsync } from "./types"
 
 /**
  * Combines multiple `results` into a single result. If all results are Ok, returns an Ok containing an array of all values. If any result is an Err, returns the first Err encountered.

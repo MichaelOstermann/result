@@ -1,5 +1,5 @@
+import type { ResultAsync } from "."
 import type { AwaitableResult, InferErr, InferOk } from "../types"
-import type { ResultAsync } from "./types"
 import { dfdlT } from "@monstermann/dfdl"
 import { err } from "../err"
 import { ok } from "../ok"

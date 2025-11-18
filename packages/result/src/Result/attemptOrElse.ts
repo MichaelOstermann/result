@@ -1,4 +1,4 @@
-import type { Result } from "./types"
+import type { Result } from "."
 import { err } from "../err"
 import { ok } from "../ok"
 

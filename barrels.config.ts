@@ -14,4 +14,3 @@ export default defineConfig([
         include: ["*", "Result/index.js", "ResultAsync/index.js"],
     }),
 ])
-
