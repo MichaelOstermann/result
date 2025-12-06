@@ -25,9 +25,9 @@ export default createUnplugin<Options>(({ debug, enforce, exclude, include } = {
                     debug: shouldDebug(id),
                     resolve({ importAlias, importName, importPath, propertyName }) {
                         if (importPath === "@monstermann/result" && importName === "Result")
-                            return `import { ${propertyName} as ${importAlias} } from "@monstermann/result/Result/${propertyName}.js"`
+                            return `import { ${propertyName} as ${importAlias} } from "@monstermann/result/Result/${propertyName}.mjs"`
                         if (importPath === "@monstermann/result" && importName === "ResultAsync")
-                            return `import { ${propertyName} as ${importAlias} } from "@monstermann/result/ResultAsync/${propertyName}.js"`
+                            return `import { ${propertyName} as ${importAlias} } from "@monstermann/result/ResultAsync/${propertyName}.mjs"`
                         return undefined
                     },
                 })
