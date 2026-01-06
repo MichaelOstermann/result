@@ -3,10 +3,20 @@ import type { AwaitableResult, InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # inspectErr
+ *
+ * ```ts
+ * function ResultAsync.inspectErr(
+ *     result: AwaitableResult<T, E>,
+ *     inspect: (error: E) => void
+ * ): ResultAsync<T, E>
+ * ```
+ *
  * Inspects the Err value using the `inspect` function without changing the result. If the result is an Err, calls the inspect function with the error value and returns the original result unchanged. If the result is Ok, returns it unchanged without calling inspect.
  *
- * @example
- * ```ts
+ * ## Example
+ *
+ * ```ts [data-first]
  * await ResultAsync.inspectErr(err("fail"), (e) => console.log(`Error: ${e}`));
  * // Err<string>("fail") - logs "Error: fail"
  *
@@ -14,14 +24,14 @@ import { dfdlT } from "@monstermann/dfdl"
  * // Ok<number>(5) - no log
  * ```
  *
- * @example
- * ```ts
+ * ```ts [data-last]
  * await pipe(
  *     err("fail"),
  *     ResultAsync.inspectErr((e) => console.log(`Error: ${e}`)),
  * );
  * // Err<string>("fail") - logs "Error: fail"
  * ```
+ *
  */
 export const inspectErr: {
     <T extends AwaitableResult>(inspect: (error: InferErr<T>) => void): (result: T) => ResultAsync<InferOk<T>, InferErr<T>>

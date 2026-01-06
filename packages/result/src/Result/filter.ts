@@ -4,13 +4,22 @@ import { dfdlT } from "@monstermann/dfdl"
 import { err } from "../err"
 
 /**
+ * # filter
+ *
+ * ```ts
+ * function Result.filter(
+ *     result: Result<T, E>,
+ *     predicate: (value: T) => boolean
+ * ): Result<T, E | void>
+ * ```
+ *
  * Filters the Ok value using the `predicate` function. If the result is Ok and the predicate returns true, returns the original result. If the predicate returns false, returns an Err with `void`. If the result is already an Err, returns it unchanged.
  *
  * Can be used for type narrowing.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.filter(ok(5), (x) => x > 3);
  * // Ok<number>(5)
  *
@@ -21,15 +30,14 @@ import { err } from "../err"
  * // Err<string>("fail")
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(
  *     ok(5),
  *     Result.filter((x) => x > 3),
  * );
  * // Ok<number>(5)
  * ```
+ *
  */
 export const filter: {
     <T extends Result, U extends InferOk<T>>(

@@ -3,9 +3,19 @@ import { err } from "../err"
 import { ok } from "../ok"
 
 /**
+ * # attemptOrElse
+ *
+ * ```ts
+ * function ResultAsync.attemptOrElse<T, U>(
+ *     unsafeFn: () => T | Promise<T>,
+ *     orElse: (error: unknown) => U | Promise<U>
+ * ): ResultAsync<T, U>
+ * ```
+ *
  * Wraps a function that may throw an exception in a Result, transforming any caught error. If the `unsafeFn` executes successfully, returns its result wrapped in Ok. If it throws an error, transforms the error using `orElse` and returns it wrapped in Err.
  *
- * @example
+ * ## Example
+ *
  * ```ts
  * await ResultAsync.attemptOrElse(
  *     () => 5,
@@ -27,6 +37,7 @@ import { ok } from "../ok"
  * );
  * // Err<Error>(new Error("Failed to parse json", { cause: e }))
  * ```
+ *
  */
 export async function attemptOrElse<T, U>(unsafeFn: () => T, orElse: (error: unknown) => U): ResultAsync<Awaited<T>, Awaited<U>> {
     try {

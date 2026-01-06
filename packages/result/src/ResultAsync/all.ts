@@ -2,9 +2,16 @@ import type { ResultAsync } from "."
 import type { AwaitableResult, InferErr, InferOk } from "../types"
 
 /**
+ * # all
+ *
+ * ```ts
+ * function ResultAsync.all(results: AwaitableResult<T, E>[]): ResultAsync<T[], E>
+ * ```
+ *
  * Combines multiple `results` into a single result. If all results are Ok, returns an Ok containing an array of all values. If any result is an Err, returns the first Err encountered.
  *
- * @example
+ * ## Example
+ *
  * ```ts
  * await ResultAsync.all([ok(1), ok(2), ok(3)]);
  * // Ok<number[]>([1, 2, 3])
@@ -12,6 +19,7 @@ import type { AwaitableResult, InferErr, InferOk } from "../types"
  * await ResultAsync.all([ok(1), err("fail"), ok(3)]);
  * // Err<string>("fail")
  * ```
+ *
  */
 export async function all<const T extends readonly AwaitableResult[]>(results: T): ResultAsync<{
     -readonly [K in keyof T]: InferOk<T[K]>

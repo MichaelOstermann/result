@@ -2,10 +2,21 @@ import type { AwaitableResult, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # mapOr
+ *
+ * ```ts
+ * function ResultAsync.mapOr(
+ *     result: AwaitableResult<T, E>,
+ *     transform: (value: T) => U | Promise<U>,
+ *     fallback: F
+ * ): Promise<U | F>
+ * ```
+ *
  * Unwraps the Ok value using the `transform` function, or returns the `fallback` value if the result is an Err.
  *
- * @example
- * ```ts
+ * ## Example
+ *
+ * ```ts [data-first]
  * await ResultAsync.mapOr(ok(5), (x) => x * 2, 0);
  * // 10
  *
@@ -13,14 +24,14 @@ import { dfdlT } from "@monstermann/dfdl"
  * // 0
  * ```
  *
- * @example
- * ```ts
+ * ```ts [data-last]
  * await pipe(
  *     ok(5),
  *     ResultAsync.mapOr((x) => x * 2, 0),
  * );
  * // 10
  * ```
+ *
  */
 export const mapOr: {
     <T extends AwaitableResult, U, V>(transform: (value: InferOk<T>) => U, fallback: V): (result: T) => Promise<Awaited<U | V>>

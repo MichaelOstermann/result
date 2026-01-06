@@ -3,11 +3,21 @@ import type { InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # mapOrElse
+ *
+ * ```ts
+ * function Result.mapOrElse(
+ *     result: Result<T, E>,
+ *     transform: (value: T) => U,
+ *     orElse: (error: E) => F
+ * ): U | F
+ * ```
+ *
  * Unwraps the Ok value using the `transform` function, or transforms the Err value using the `orElse` function.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.mapOrElse(
  *     ok(5),
  *     (x) => x * 2,
@@ -23,9 +33,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * // "Error: fail"
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(
  *     ok(5),
  *     Result.mapOrElse(
@@ -35,6 +43,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * );
  * // 10
  * ```
+ *
  */
 export const mapOrElse: {
     <T extends Result, U, V>(transform: (value: InferOk<T>) => U, orElse: (error: InferErr<T>) => V): (result: T) => U | V

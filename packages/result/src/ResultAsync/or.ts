@@ -3,10 +3,20 @@ import type { AwaitableResult, InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # or
+ *
+ * ```ts
+ * function ResultAsync.or(
+ *     a: AwaitableResult<T, E>,
+ *     b: AwaitableResult<U, F>
+ * ): ResultAsync<T | U, F>
+ * ```
+ *
  * Performs a logical OR operation on two results. Returns `a` if it's Ok, otherwise returns `b`.
  *
- * @example
- * ```ts
+ * ## Example
+ *
+ * ```ts [data-first]
  * await ResultAsync.or(ok(1), ok(2));
  * // Ok<number>(1)
  *
@@ -17,11 +27,11 @@ import { dfdlT } from "@monstermann/dfdl"
  * // Err<string>("fail2")
  * ```
  *
- * @example
- * ```ts
+ * ```ts [data-last]
  * await pipe(err("fail"), ResultAsync.or(ok(2)));
  * // Ok<number>(2)
  * ```
+ *
  */
 export const or: {
     <U extends AwaitableResult>(b: U): <T extends AwaitableResult>(a: T) => ResultAsync<InferOk<T> | InferOk<U>, InferErr<U>>

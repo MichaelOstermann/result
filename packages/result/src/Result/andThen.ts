@@ -3,11 +3,20 @@ import type { InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # andThen
+ *
+ * ```ts
+ * function Result.andThen(
+ *     result: Result<T, E>,
+ *     transform: (value: T) => Result<U, F>
+ * ): Result<U, E | F>
+ * ```
+ *
  * Chains Result-returning operations. If the `result` is Ok, applies the `transform` function to its value. If the `result` is Err, returns the Err unchanged.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.andThen(ok(5), (x) => ok(x * 2));
  * // Ok<number>
  *
@@ -15,15 +24,14 @@ import { dfdlT } from "@monstermann/dfdl"
  * // Err<string>
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(
  *     ok(5),
  *     Result.andThen((x) => ok(x * 2)),
  * );
  * // Ok<number>
  * ```
+ *
  */
 export const andThen: {
     <T extends Result, U extends Result>(

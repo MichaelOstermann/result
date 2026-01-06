@@ -3,10 +3,19 @@ import { dfdlT } from "@monstermann/dfdl"
 import { ResultError } from "../ResultError"
 
 /**
+ * # unwrap
+ *
+ * ```ts
+ * function ResultAsync.unwrap(
+ *     result: AwaitableResult<T, E>
+ * ): Promise<T>
+ * ```
+ *
  * Unwraps the Ok value from the `result`. If the result is an Err, throws a ResultError with a default message.
  *
- * @example
- * ```ts
+ * ## Example
+ *
+ * ```ts [data-first]
  * await ResultAsync.unwrap(ok(5));
  * // 5
  *
@@ -14,11 +23,11 @@ import { ResultError } from "../ResultError"
  * // throws ResultError("Called Err.unwrap()")
  * ```
  *
- * @example
- * ```ts
+ * ```ts [data-last]
  * await pipe(ok(5), ResultAsync.unwrap());
  * // 5
  * ```
+ *
  */
 export const unwrap: {
     <T extends AwaitableResult>(): (result: T) => Promise<InferOk<T>>

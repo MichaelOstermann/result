@@ -2,10 +2,23 @@ import type { AwaitableResult, InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # match
+ *
+ * ```ts
+ * function ResultAsync.match(
+ *     result: AwaitableResult<T, E>,
+ *     patterns: {
+ *         Ok: (value: T) => U | Promise<U>,
+ *         Err: (error: E) => F | Promise<F>
+ *     }
+ * ): Promise<U | F>
+ * ```
+ *
  * Pattern matches on the `result` using the provided `patterns` object. Calls the `Ok` function if the result is Ok, or the `Err` function if the result is an Err.
  *
- * @example
- * ```ts
+ * ## Example
+ *
+ * ```ts [data-first]
  * await ResultAsync.match(ok(5), {
  *     Ok: (x) => `Value: ${x}`,
  *     Err: (e) => `Error: ${e}`,
@@ -19,8 +32,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * // "Error: fail"
  * ```
  *
- * @example
- * ```ts
+ * ```ts [data-last]
  * await pipe(
  *     ok(5),
  *     ResultAsync.match({
@@ -30,6 +42,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * );
  * // "Value: 5"
  * ```
+ *
  */
 export const match: {
     <T extends AwaitableResult, A, B>(patterns: { Err: (error: InferErr<T>) => B, Ok: (value: InferOk<T>) => A }): (result: T) => Promise<Awaited<A | B>>

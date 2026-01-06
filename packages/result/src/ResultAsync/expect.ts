@@ -3,10 +3,20 @@ import { dfdlT } from "@monstermann/dfdl"
 import { ResultError } from "../ResultError"
 
 /**
+ * # expect
+ *
+ * ```ts
+ * function ResultAsync.expect(
+ *     result: AwaitableResult<T, E>,
+ *     message: string
+ * ): Promise<T>
+ * ```
+ *
  * Unwraps the Ok value from the `result`. If the result is an Err, throws a ResultError with the given `message`.
  *
- * @example
- * ```ts
+ * ## Example
+ *
+ * ```ts [data-first]
  * await ResultAsync.expect(ok(5), "Expected a value");
  * // 5
  *
@@ -14,11 +24,11 @@ import { ResultError } from "../ResultError"
  * // throws ResultError("Expected a value")
  * ```
  *
- * @example
- * ```ts
+ * ```ts [data-last]
  * await pipe(ok(5), ResultAsync.expect("Expected a value"));
  * // 5
  * ```
+ *
  */
 export const expect: {
     <T extends AwaitableResult>(message: string): (result: T) => Promise<InferOk<T>>

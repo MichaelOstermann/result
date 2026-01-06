@@ -4,11 +4,17 @@ import { dfdlT } from "@monstermann/dfdl"
 import { ResultError } from "../ResultError"
 
 /**
+ * # expect
+ *
+ * ```ts
+ * function Result.expect(result: Result<T, E>, message: string): T
+ * ```
+ *
  * Unwraps the Ok value from the `result`. If the result is an Err, throws a ResultError with the given `message`.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.expect(ok(5), "Expected a value");
  * // 5
  *
@@ -16,12 +22,11 @@ import { ResultError } from "../ResultError"
  * // throws ResultError("Expected a value")
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(ok(5), Result.expect("Expected a value"));
  * // 5
  * ```
+ *
  */
 export const expect: {
     <T extends Result>(message: string): (result: T) => InferOk<T>

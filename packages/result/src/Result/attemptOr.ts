@@ -3,9 +3,16 @@ import { err } from "../err"
 import { ok } from "../ok"
 
 /**
+ * # attemptOr
+ *
+ * ```ts
+ * function Result.attemptOr(unsafeFn: () => T, or: E): Result<T, E>
+ * ```
+ *
  * Wraps a function that may throw an exception in a Result, using a specific error value. If the `unsafeFn` executes successfully, returns its result wrapped in Ok. If it throws an error, returns the `or` value wrapped in Err.
  *
- * @example
+ * ## Example
+ *
  * ```ts
  * Result.attemptOr(() => 5, "default error");
  * // Ok<number>(5)
@@ -18,6 +25,7 @@ import { ok } from "../ok"
  * Result.attemptOr(() => JSON.parse("invalid json"), "parse failed");
  * // Err<string>("parse failed")
  * ```
+ *
  */
 export function attemptOr<T, U>(unsafeFn: () => T, or: U): Result<T, U> {
     try {

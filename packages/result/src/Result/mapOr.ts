@@ -3,11 +3,21 @@ import type { InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # mapOr
+ *
+ * ```ts
+ * function Result.mapOr(
+ *     result: Result<T, E>,
+ *     transform: (value: T) => U,
+ *     fallback: F
+ * ): U | F
+ * ```
+ *
  * Unwraps the Ok value using the `transform` function, or returns the `fallback` value if the result is an Err.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.mapOr(ok(5), (x) => x * 2, 0);
  * // 10
  *
@@ -15,15 +25,14 @@ import { dfdlT } from "@monstermann/dfdl"
  * // 0
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(
  *     ok(5),
  *     Result.mapOr((x) => x * 2, 0),
  * );
  * // 10
  * ```
+ *
  */
 export const mapOr: {
     <T extends Result, U, V>(transform: (value: InferOk<T>) => U, fallback: V): (result: T) => U | V

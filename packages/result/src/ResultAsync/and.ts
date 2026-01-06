@@ -3,11 +3,20 @@ import type { AwaitableResult, InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # and
+ *
+ * ```ts
+ * function ResultAsync.and(
+ *     a: AwaitableResult<T, E>,
+ *     b: AwaitableResult<U, F>
+ * ): ResultAsync<U, E | F>
+ * ```
+ *
  * Performs a logical AND operation on two results. Returns `b` if `a` is Ok, otherwise returns `a` (which must be an Err).
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * await ResultAsync.and(ok(1), ok("success"));
  * // Ok<string>("success")
  *
@@ -18,12 +27,11 @@ import { dfdlT } from "@monstermann/dfdl"
  * // Err<string>("fail")
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * await pipe(ok(1), ResultAsync.and(ok("success")));
  * // Ok<string>("success")
  * ```
+ *
  */
 export const and: {
     <U extends AwaitableResult>(b: U): <T extends AwaitableResult>(a: T) => ResultAsync<InferOk<U>, InferErr<T> | InferErr<U>>

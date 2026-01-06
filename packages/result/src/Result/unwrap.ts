@@ -4,11 +4,17 @@ import { dfdlT } from "@monstermann/dfdl"
 import { ResultError } from "../ResultError"
 
 /**
+ * # unwrap
+ *
+ * ```ts
+ * function Result.unwrap(result: Result<T, E>): T
+ * ```
+ *
  * Unwraps the Ok value from the `result`. If the result is an Err, throws a ResultError with a default message.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.unwrap(ok(5));
  * // 5
  *
@@ -16,12 +22,11 @@ import { ResultError } from "../ResultError"
  * // throws ResultError("Called Err.unwrap()")
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(ok(5), Result.unwrap());
  * // 5
  * ```
+ *
  */
 export const unwrap: {
     <T extends Result>(): (result: T) => InferOk<T>

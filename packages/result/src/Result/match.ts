@@ -3,11 +3,20 @@ import type { InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # match
+ *
+ * ```ts
+ * function Result.match(result: Result<T, E>, patterns: {
+ *     Ok: (value: T) => A
+ *     Err: (error: E) => B
+ * }): A | B
+ * ```
+ *
  * Pattern matches on the `result` using the provided `patterns` object. Calls the `Ok` function if the result is Ok, or the `Err` function if the result is an Err.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.match(ok(5), {
  *     Ok: (x) => `Value: ${x}`,
  *     Err: (e) => `Error: ${e}`,
@@ -21,9 +30,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * // "Error: fail"
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(
  *     ok(5),
  *     Result.match({
@@ -33,6 +40,7 @@ import { dfdlT } from "@monstermann/dfdl"
  * );
  * // "Value: 5"
  * ```
+ *
  */
 export const match: {
     <T extends Result, A, B>(patterns: { Err: (error: InferErr<T>) => B, Ok: (value: InferOk<T>) => A }): (result: T) => A | B

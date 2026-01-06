@@ -3,11 +3,20 @@ import type { InferErr, InferOk } from "../types"
 import { dfdlT } from "@monstermann/dfdl"
 
 /**
+ * # or
+ *
+ * ```ts
+ * function Result.or(
+ *     a: Result<T, E>,
+ *     b: Result<U, F>
+ * ): Result<T | U, F>
+ * ```
+ *
  * Performs a logical OR operation on two results. Returns `a` if it's Ok, otherwise returns `b`.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.or(ok(1), ok(2));
  * // Ok<number>(1)
  *
@@ -18,12 +27,11 @@ import { dfdlT } from "@monstermann/dfdl"
  * // Err<string>("fail2")
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(err("fail"), Result.or(ok(2)));
  * // Ok<number>(2)
  * ```
+ *
  */
 export const or: {
     <U extends Result>(b: U): <T extends Result>(a: T) => Result<InferOk<T> | InferOk<U>, InferErr<U>>

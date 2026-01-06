@@ -5,11 +5,17 @@ import { err } from "../err"
 import { ok } from "../ok"
 
 /**
+ * # flip
+ *
+ * ```ts
+ * function Result.flip(result: Result<T, E>): Result<E, T>
+ * ```
+ *
  * Swaps the Ok and Err values of the `result`. An Ok becomes an Err and an Err becomes an Ok.
  *
- * @example
- * ```ts
- * // data-first
+ * ## Example
+ *
+ * ```ts [data-first]
  * Result.flip(ok(5));
  * // Err<number>(5)
  *
@@ -17,12 +23,11 @@ import { ok } from "../ok"
  * // Ok<string>("fail")
  * ```
  *
- * @example
- * ```ts
- * // data-last
+ * ```ts [data-last]
  * pipe(ok(5), Result.flip());
  * // Err<number>(5)
  * ```
+ *
  */
 export const flip: {
     (): <T extends Result>(result: T) => Result<InferErr<T>, InferOk<T>>
