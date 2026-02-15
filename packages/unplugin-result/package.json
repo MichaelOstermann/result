@@ -1,7 +1,7 @@
 {
     "name": "@monstermann/unplugin-result",
     "type": "module",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "description": "Functional utilities for success | error types.",
     "author": "Michael Ostermann <michaelostermann@me.com>",
     "license": "MIT",
