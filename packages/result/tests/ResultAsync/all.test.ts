@@ -10,7 +10,7 @@ describe("ResultAsync.all", () => {
             Promise.resolve(ok(2)),
             ok(3),
         ])
-        expect(result).toEqual([1, 2, 3])
+        expect(result).toEqual({ ok: true, value: [1, 2, 3] })
     })
 
     it("should return first Err when any result is Err", async () => {
@@ -24,7 +24,7 @@ describe("ResultAsync.all", () => {
 
     it("should return Ok with empty array for empty input", async () => {
         const result = await all([])
-        expect(result).toEqual([])
+        expect(result).toEqual({ ok: true, value: [] })
     })
 
     it("should handle mixed sync and async results", async () => {
@@ -33,6 +33,6 @@ describe("ResultAsync.all", () => {
             ok(42),
             Promise.resolve(ok(true)),
         ])
-        expect(result).toEqual(["hello", 42, true])
+        expect(result).toEqual({ ok: true, value: ["hello", 42, true] })
     })
 })

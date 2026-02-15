@@ -6,7 +6,7 @@ import { all } from "../../src/Result/all"
 describe("Result.all", () => {
     it("should return Ok with all values when all results are Ok", () => {
         const result = all([ok(1), ok(2), ok(3)])
-        expect(result).toEqual([1, 2, 3])
+        expect(result).toEqual({ ok: true, value: [1, 2, 3] })
     })
 
     it("should return first Err when any result is Err", () => {
@@ -16,7 +16,7 @@ describe("Result.all", () => {
 
     it("should return Ok with empty array for empty input", () => {
         const result = all([])
-        expect(result).toEqual([])
+        expect(result).toEqual({ ok: true, value: [] })
     })
 
     it("should return first error when multiple errors exist", () => {
