@@ -1,5 +1,6 @@
 import type { ResultAsync } from "."
 import type { AwaitableResult, InferErr, InferOk } from "../types"
+import { ok } from "../ok"
 
 /**
  * # all
@@ -29,5 +30,5 @@ export async function all<const T extends readonly AwaitableResult[]>(results: T
         if (result.ok) oks.push(result.value)
         else return result as any
     }
-    return oks
+    return ok(oks)
 }

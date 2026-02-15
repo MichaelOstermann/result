@@ -1,5 +1,6 @@
 import type { Result } from "."
 import type { InferErr, InferOk } from "../types"
+import { ok } from "../ok"
 
 /**
  * # all
@@ -29,5 +30,5 @@ export function all<const T extends readonly Result[]>(results: T): Result<{
         if (result.ok) oks.push(result.value)
         else return result as any
     }
-    return oks
+    return ok(oks)
 }
